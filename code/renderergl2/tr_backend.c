@@ -1518,7 +1518,8 @@ const void *RB_PostProcess(const void *data)
 
 			color[0] =
 			color[1] =
-			color[2] = pow(2, r_cameraExposure->value); //exp2(r_cameraExposure->value);
+			color[2] = r_cameraExposure->value * r_cameraExposure->value;
+			/*color[2] = pow(2, r_cameraExposure->value);*/
 			color[3] = 1.0f;
 
 			FBO_Blit(srcFbo, srcBox, NULL, NULL, dstBox, NULL, color, 0);
@@ -1528,75 +1529,12 @@ const void *RB_PostProcess(const void *data)
 	if (r_drawSunRays->integer)
 		RB_SunRays(NULL, srcBox, NULL, dstBox);
 
-	if (1)
+	/*if (1)
 		RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
 	else
-		RB_GaussianBlur(backEnd.refdef.blurFactor);
+		RB_GaussianBlur(backEnd.refdef.blurFactor);*/
 
-#if 0
-	if (0)
-	{
-		vec4_t quadVerts[4];
-		vec2_t texCoords[4];
-		ivec4_t iQtrBox;
-		vec4_t box;
-		vec4_t viewInfo;
-		static float scale = 5.0f;
-
-		scale -= 0.005f;
-		if (scale < 0.01f)
-			scale = 5.0f;
-
-		FBO_FastBlit(NULL, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-
-		iQtrBox[0] = backEnd.viewParms.viewportX      * tr.quarterImage[0]->width / (float)glConfig.vidWidth;
-		iQtrBox[1] = backEnd.viewParms.viewportY      * tr.quarterImage[0]->height / (float)glConfig.vidHeight;
-		iQtrBox[2] = backEnd.viewParms.viewportWidth  * tr.quarterImage[0]->width / (float)glConfig.vidWidth;
-		iQtrBox[3] = backEnd.viewParms.viewportHeight * tr.quarterImage[0]->height / (float)glConfig.vidHeight;
-
-		qglViewport(iQtrBox[0], iQtrBox[1], iQtrBox[2], iQtrBox[3]);
-		qglScissor(iQtrBox[0], iQtrBox[1], iQtrBox[2], iQtrBox[3]);
-
-		VectorSet4(box, 0.0f, 0.0f, 1.0f, 1.0f);
-
-		texCoords[0][0] = box[0]; texCoords[0][1] = box[3];
-		texCoords[1][0] = box[2]; texCoords[1][1] = box[3];
-		texCoords[2][0] = box[2]; texCoords[2][1] = box[1];
-		texCoords[3][0] = box[0]; texCoords[3][1] = box[1];
-
-		VectorSet4(box, -1.0f, -1.0f, 1.0f, 1.0f);
-
-		VectorSet4(quadVerts[0], box[0], box[3], 0, 1);
-		VectorSet4(quadVerts[1], box[2], box[3], 0, 1);
-		VectorSet4(quadVerts[2], box[2], box[1], 0, 1);
-		VectorSet4(quadVerts[3], box[0], box[1], 0, 1);
-
-		GL_State(GLS_DEPTHTEST_DISABLE);
-
-
-		VectorSet4(viewInfo, backEnd.viewParms.zFar / r_znear->value, backEnd.viewParms.zFar, 0.0, 0.0);
-
-		viewInfo[2] = scale / (float)(tr.quarterImage[0]->width);
-		viewInfo[3] = scale / (float)(tr.quarterImage[0]->height);
-
-		FBO_Bind(tr.quarterFbo[1]);
-		GLSL_BindProgram(&tr.depthBlurShader[2]);
-		GL_BindToTMU(tr.quarterImage[0], TB_COLORMAP);
-		GLSL_SetUniformVec4(&tr.depthBlurShader[2], UNIFORM_VIEWINFO, viewInfo);
-		RB_InstantQuad2(quadVerts, texCoords);
-
-		FBO_Bind(tr.quarterFbo[0]);
-		GLSL_BindProgram(&tr.depthBlurShader[3]);
-		GL_BindToTMU(tr.quarterImage[1], TB_COLORMAP);
-		GLSL_SetUniformVec4(&tr.depthBlurShader[3], UNIFORM_VIEWINFO, viewInfo);
-		RB_InstantQuad2(quadVerts, texCoords);
-
-		SetViewportAndScissor();
-
-		FBO_FastBlit(tr.quarterFbo[1], NULL, NULL, NULL, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-		FBO_Bind(NULL);
-	}
-#endif
+    RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
 
 	if (0 && r_sunlightMode->integer)
 	{
@@ -1624,7 +1562,7 @@ const void *RB_PostProcess(const void *data)
 		FBO_BlitFromTexture(tr.pshadowMaps[3], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
 	}
 
-	if (0)
+	/*if (0)
 	{
 		ivec4_t dstBox;
 		VectorSet4(dstBox, 256, glConfig.vidHeight - 256, 256, 256);
@@ -1638,22 +1576,7 @@ const void *RB_PostProcess(const void *data)
 		ivec4_t dstBox;
 		VectorSet4(dstBox, 256, glConfig.vidHeight - 256, 256, 256);
 		FBO_BlitFromTexture(tr.sunRaysImage, NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-	}
-
-#if 0
-	if (r_cubeMapping->integer && tr.numCubemaps)
-	{
-		ivec4_t dstBox;
-		int cubemapIndex = R_CubemapForPoint( backEnd.viewParms.or.origin );
-
-		if (cubemapIndex)
-		{
-			VectorSet4(dstBox, 0, glConfig.vidHeight - 256, 256, 256);
-			//FBO_BlitFromTexture(tr.renderCubeImage, NULL, NULL, NULL, dstBox, &tr.testcubeShader, NULL, 0);
-			FBO_BlitFromTexture(tr.cubemaps[cubemapIndex - 1].image, NULL, NULL, NULL, dstBox, &tr.testcubeShader, NULL, 0);
-		}
-	}
-#endif
+	}*/
 
 	backEnd.framePostProcessed = qtrue;
 
