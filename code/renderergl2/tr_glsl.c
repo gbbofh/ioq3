@@ -1010,7 +1010,7 @@ void GLSL_InitGPUShaders(void)
 	
 	GLSL_InitUniforms(&tr.normalColorShader);
 
-	GLSL_SetUniformInt(&tr.textureColorShader, UNIFORM_TEXTUREMAP, TB_DIFFUSEMAP);
+	GLSL_SetUniformInt(&tr.normalColorShader, UNIFORM_TEXTUREMAP, TB_DIFFUSEMAP);
 
 	GLSL_FinishGPUShader(&tr.normalColorShader);
 
