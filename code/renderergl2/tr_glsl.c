@@ -50,6 +50,8 @@ extern const char *fallbackShader_ssao_vp;
 extern const char *fallbackShader_ssao_fp;
 extern const char *fallbackShader_texturecolor_vp;
 extern const char *fallbackShader_texturecolor_fp;
+extern const char *fallbackShader_normalcolor_vp;
+extern const char *fallbackShader_normalcolor_fp;
 extern const char *fallbackShader_tonemap_vp;
 extern const char *fallbackShader_tonemap_fp;
 
@@ -1001,7 +1003,7 @@ void GLSL_InitGPUShaders(void)
      */
 	attribs = ATTR_POSITION | ATTR_NORMAL;
 
-	if (!GLSL_InitGPUShader(&tr.normalColorShader, "normalcolor", attribs, qtrue, extradefines, qtrue, fallbackShader_texturecolor_vp, fallbackShader_texturecolor_fp))
+	if (!GLSL_InitGPUShader(&tr.normalColorShader, "normalcolor", attribs, qtrue, extradefines, qtrue, fallbackShader_normalcolor_vp, fallbackShader_normalcolor_fp))
 	{
 		ri.Error(ERR_FATAL, "Could not load normalcolor shader!");
 	}
