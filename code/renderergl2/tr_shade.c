@@ -145,7 +145,7 @@ static void DrawNormals (shaderCommands_t *input) {
 
 		GLSL_BindProgram(sp);
 		
-		GLSL_SetUniformMat4(sp, UNIFORM_MODELMATRIX, glState.modelview);
+		GLSL_SetUniformMat4(sp, UNIFORM_MODELMATRIX, backEnd.or.transformMatrix);
 		/*VectorSet4(color, 1, 1, 1, 1);
 		GLSL_SetUniformVec4(sp, UNIFORM_COLOR, color);*/
 		GLSL_SetUniformInt(sp, UNIFORM_ALPHATEST, 0);
