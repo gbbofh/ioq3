@@ -134,7 +134,8 @@ Draws vertex normals for debugging
 ================
 */
 static void DrawNormals (shaderCommands_t *input) {
-	GL_BindToTMU( tr.whiteImage, TB_COLORMAP );
+	// GL_BindToTMU( tr.whiteImage, TB_COLORMAP );
+	// GL_BindToTMU( tr.whiteImage, TB_COLORMAP );
 
 	// GL_State( GLS_POLYMODE_LINE | GLS_DEPTHMASK_TRUE );
 	qglDepthRange( 0, 0 );

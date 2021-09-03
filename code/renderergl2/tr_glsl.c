@@ -1001,7 +1001,7 @@ void GLSL_InitGPUShaders(void)
     /*
      * Normal shader
      */
-	attribs = ATTR_POSITION | ATTR_NORMAL;
+	attribs = ATTR_POSITION | ATTR_NORMAL | ATTR_TEXCOORD;
 
 	if (!GLSL_InitGPUShader(&tr.normalColorShader, "normalcolor", attribs, qtrue, extradefines, qtrue, fallbackShader_normalcolor_vp, fallbackShader_normalcolor_fp))
 	{
@@ -1009,6 +1009,8 @@ void GLSL_InitGPUShaders(void)
 	}
 	
 	GLSL_InitUniforms(&tr.normalColorShader);
+
+	GLSL_SetUniformInt(&tr.textureColorShader, UNIFORM_TEXTUREMAP, TB_DIFFUSEMAP);
 
 	GLSL_FinishGPUShader(&tr.normalColorShader);
 
