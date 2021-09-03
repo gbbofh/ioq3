@@ -140,7 +140,7 @@ static void DrawNormals (shaderCommands_t *input) {
 	qglDepthRange( 0, 0 );
 
 	{
-		shaderProgram_t *sp = &tr.textureColorShader;
+		shaderProgram_t *sp = &tr.normalColorShader;
 		vec4_t color;
 
 		GLSL_BindProgram(sp);
