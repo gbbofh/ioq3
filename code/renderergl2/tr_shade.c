@@ -134,7 +134,26 @@ Draws vertex normals for debugging
 ================
 */
 static void DrawNormals (shaderCommands_t *input) {
-	//FIXME: implement this
+	GL_BindToTMU( tr.whiteImage, TB_COLORMAP );
+
+	GL_State( GLS_POLYMODE_LINE | GLS_DEPTHMASK_TRUE );
+	qglDepthRange( 0, 0 );
+
+	{
+		shaderProgram_t *sp = &tr.textureColorShader;
+		vec4_t color;
+
+		GLSL_BindProgram(sp);
+		
+		GLSL_SetUniformMat4(sp, UNIFORM_MODELVIEWPROJECTIONMATRIX, glState.modelviewProjection);
+		/*VectorSet4(color, 1, 1, 1, 1);
+		GLSL_SetUniformVec4(sp, UNIFORM_COLOR, color);*/
+		GLSL_SetUniformInt(sp, UNIFORM_ALPHATEST, 0);
+
+		R_DrawElements(input->numIndexes, input->firstIndex);
+	}
+
+	qglDepthRange( 0, 1 );
 }
 
 /*

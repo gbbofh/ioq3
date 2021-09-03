@@ -995,6 +995,21 @@ void GLSL_InitGPUShaders(void)
 
 	numEtcShaders++;
 
+
+    /*
+     * Normal shader
+     */
+	attribs = ATTR_POSITION | ATTR_NORMAL;
+
+	if (!GLSL_InitGPUShader(&tr.normalColorShader, "normalcolor", attribs, qtrue, extradefines, qtrue, fallbackShader_texturecolor_vp, fallbackShader_texturecolor_fp))
+	{
+		ri.Error(ERR_FATAL, "Could not load normalcolor shader!");
+	}
+	
+	GLSL_InitUniforms(&tr.normalColorShader);
+
+	GLSL_FinishGPUShader(&tr.normalColorShader);
+
 	for (i = 0; i < FOGDEF_COUNT; i++)
 	{
 		if ((i & FOGDEF_USE_VERTEX_ANIMATION) && (i & FOGDEF_USE_BONE_ANIMATION))
