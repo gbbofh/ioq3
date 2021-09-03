@@ -1,10 +1,6 @@
-vec3 attr_Normal;
+in vec3 v_Normal;
 
 uniform sampler2D u_DiffuseMap;
-uniform vec4      u_Color;
-
-varying vec2      var_Tex1;
-
 
 void main()
 {
