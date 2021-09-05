@@ -487,24 +487,27 @@ void RB_GaussianBlur(float blur)
  */
 void RB_CCTV(FBO_t *src, ivec4_t srcBox, FBO_t *dst, ivec4_t dstBox)
 {
+    vec4_t color;
+
+    VectorSet4(color, 1, 1, 1, 1);
+
     /*
      * Downsample from the source FBO to 1/4 resolution
      * Copy the downsampled image to scratch FBO 1
      */
-
     FBO_FastBlit(src, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-    FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    // FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
     /*
      * Run the shader and store the results in scratch FBO 2
      */
-    FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, tr.textureScratchFbo[1], dstBox, &tr.cctvShader, NULL, 0);
-    // FBO_Blit(tr.quarterFbo[0], srcBox, NULL, tr.textureScratchFbo[0], NULL, &tr.cctvShader, NULL, 0);
+    // FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, tr.textureScratchFbo[1], dstBox, &tr.cctvShader, NULL, 0);
 
     /*
      * Set up the source and dest boxes to copy back to screen buffer
      */
-    VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[1]->width, tr.textureScratchFbo[1]->height);
+    VectorSet4(srcBox, 0, 0, tr.quarterFbo[1]->width, tr.quarterFbo[1]->height);
+    // VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[1]->width, tr.textureScratchFbo[1]->height);
     VectorSet4(dstBox, 0, 0, glConfig.vidWidth,              glConfig.vidHeight);
 
     /*
@@ -512,6 +515,7 @@ void RB_CCTV(FBO_t *src, ivec4_t srcBox, FBO_t *dst, ivec4_t dstBox)
      * postprocessed image
      */
     // FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, NULL, dstBox, NULL, NULL, 0);
-    FBO_Blit(tr.textureScratchFbo[1], srcBox, NULL, NULL, dstBox, NULL, NULL, 0);
+    // FBO_Blit(tr.textureScratchFbo[1], srcBox, NULL, NULL, dstBox, NULL, color, 0);
+    FBO_Blit(tr.quarterFbo[0], srcBox, NULL, NULL, dstBox, &tr.cctvShader, color, 0);
 }
 
