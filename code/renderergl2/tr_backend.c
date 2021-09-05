@@ -1578,13 +1578,14 @@ const void *RB_PostProcess(const void *data)
 		FBO_BlitFromTexture(tr.sunRaysImage, NULL, NULL, NULL, dstBox, NULL, NULL, 0);
 	}*/
 
-    /*
-     * Gort: Run CCTV postprocessing effect
-     */
-    if(r_cctv->integer) {
+	/*
+	 * Gort: Run CCTV postprocessing effect
+	 */
+	if(r_cctv->integer) {
 
-        RB_CCTV(srcFbo, srcBox, NULL, dstBox);
-    }
+	    // RB_CCTV(srcFbo, srcBox, NULL, dstBox);
+	    RB_CCTV(NULL, srcBox, NULL, dstBox);
+	}
 
 	backEnd.framePostProcessed = qtrue;
 
