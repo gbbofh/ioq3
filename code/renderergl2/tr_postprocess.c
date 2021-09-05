@@ -498,13 +498,13 @@ void RB_CCTV(FBO_t *src, ivec4_t srcBox, FBO_t *dst, ivec4_t dstBox)
     /*
      * Run the shader and store the results in scratch FBO 2
      */
-    FBO_Blit(tr.quarterFbo[0], srcBox, NULL, tr.textureScratchFbo[0], dstBox, &tr.cctvShader, NULL, 0);
+    FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, tr.textureScratchFbo[1], dstBox, &tr.cctvShader, NULL, 0);
     // FBO_Blit(tr.quarterFbo[0], srcBox, NULL, tr.textureScratchFbo[0], NULL, &tr.cctvShader, NULL, 0);
 
     /*
      * Set up the source and dest boxes to copy back to screen buffer
      */
-    VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[0]->width, tr.textureScratchFbo[0]->height);
+    VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[1]->width, tr.textureScratchFbo[1]->height);
     VectorSet4(dstBox, 0, 0, glConfig.vidWidth,              glConfig.vidHeight);
 
     /*
