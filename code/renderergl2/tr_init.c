@@ -1248,7 +1248,7 @@ void R_Register( void )
     /*
      * Gort: Initialize cvar for CCTV postprocessing effect.
      */
-	r_cctv = ri.Cvar_Get( "r_cctv", "1", CVAR_LATCH);
+	r_cctv = ri.Cvar_Get( "r_cctv", "1", CVAR_TEMP);
 
 	r_normalMapping = ri.Cvar_Get( "r_normalMapping", "1", CVAR_ARCHIVE | CVAR_LATCH );
 	r_specularMapping = ri.Cvar_Get( "r_specularMapping", "1", CVAR_ARCHIVE | CVAR_LATCH );
