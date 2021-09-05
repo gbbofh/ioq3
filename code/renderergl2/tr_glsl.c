@@ -1432,7 +1432,7 @@ void GLSL_InitGPUShaders(void)
 
 	GLSL_InitUniforms(&tr.cctvShader);
 
-	GLSL_SetUniformInt(&tr.cctvShader, UNIFORM_SCREENDEPTHMAP, TB_COLORMAP);
+	GLSL_SetUniformInt(&tr.cctvShader, UNIFORM_SCREENIMAGEMAP, TB_COLORMAP);
 
 	GLSL_FinishGPUShader(&tr.cctvShader);
 
