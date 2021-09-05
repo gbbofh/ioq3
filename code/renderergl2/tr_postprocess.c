@@ -492,8 +492,8 @@ void RB_CCTV(FBO_t *src, ivec4_t srcBox, FBO_t *dst, ivec4_t dstBox)
      * Copy the downsampled image to scratch FBO 1
      */
 
-    FBO_FastBlit(src, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    FBO_FastBlit(src, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
     /*
      * Run the shader and store the results in scratch FBO 2
