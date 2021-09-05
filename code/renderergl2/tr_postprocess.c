@@ -493,14 +493,15 @@ void RB_CCTV(FBO_t *src, ivec4_t srcBox, FBO_t *dst, ivec4_t dstBox)
      */
 
     FBO_FastBlit(src, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-    FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    /*FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);*/
 
-    ri.Printf(PRINT_DEVELOPER, "RB_CCTV: %s\n", tr.cctvShader.name);
+    /*ri.Printf(PRINT_DEVELOPER, "RB_CCTV: %s\n", tr.cctvShader.name);*/
 
     /*
      * Run the shader and store the results in scratch FBO 2
      */
-    FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, tr.textureScratchFbo[1], dstBox, &tr.cctvShader, NULL, 0);
+    /*FBO_Blit(tr.quarterFbo[0], srcBox, NULL, tr.textureScratchFbo[0], dstBox, &tr.cctvShader, NULL, 0);*/
+    FBO_Blit(tr.quarterFbo[0], srcBox, NULL, tr.textureScratchFbo[0], NULL, &tr.cctvShader, NULL, 0);
 
     /*
      * Set up the source and dest boxes to copy back to screen buffer
