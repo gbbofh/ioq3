@@ -134,26 +134,29 @@ Draws vertex normals for debugging
 ================
 */
 static void DrawNormals (shaderCommands_t *input) {
-	// GL_BindToTMU( tr.whiteImage, TB_COLORMAP );
-	// GL_BindToTMU( tr.whiteImage, TB_COLORMAP );
 
-	// GL_State( GLS_POLYMODE_LINE | GLS_DEPTHMASK_TRUE );
-	qglDepthRange( 0, 0 );
+	qboolean is2DDraw = backEnd.currentEntity == &backEnd.entity2D;
 
+	if(is2DDraw) return;
+
+	if ( input->shader->polygonOffset )
 	{
-		shaderProgram_t *sp = &tr.normalColorShader;
-
-		GLSL_BindProgram(sp);
-		
-		GLSL_SetUniformMat4(sp, UNIFORM_MODELMATRIX, backEnd.or.transformMatrix);
-		/*VectorSet4(color, 1, 1, 1, 1);
-		GLSL_SetUniformVec4(sp, UNIFORM_COLOR, color);*/
-		GLSL_SetUniformInt(sp, UNIFORM_ALPHATEST, 0);
-
-		R_DrawElements(input->numIndexes, input->firstIndex);
+		qglEnable( GL_POLYGON_OFFSET_FILL );
 	}
 
-	qglDepthRange( 0, 1 );
+
+
+	shaderProgram_t *sp = &tr.normalColorShader;
+
+	GLSL_BindProgram(sp);
+	GLSL_SetUniformMat4(sp, UNIFORM_MODELVIEWPROJECTIONMATRIX, glState.modelviewProjection);
+	R_DrawElements(input->numIndexes, input->firstIndex);
+
+
+	if ( input->shader->polygonOffset )
+	{
+		qglDisable( GL_POLYGON_OFFSET_FILL );
+	}
 }
 
 /*
