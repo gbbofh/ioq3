@@ -1596,6 +1596,9 @@ typedef struct {
 	shaderProgram_t depthBlurShader[4];
 	shaderProgram_t testcubeShader;
 
+    /* Gort: postprocessing shader for CCTV feed effect */
+    shaderProgram_t cctvShader;
+
 
 	// -----------------------------------------
 
@@ -1774,6 +1777,11 @@ extern  cvar_t  *r_cameraExposure;
 
 extern  cvar_t  *r_depthPrepass;
 extern  cvar_t  *r_ssao;
+
+/*
+ * Gort: cvar to toggle CCTV distortion
+ */
+extern  cvar_t  *r_cctv;
 
 extern  cvar_t  *r_normalMapping;
 extern  cvar_t  *r_specularMapping;

@@ -48,6 +48,13 @@ extern const char *fallbackShader_shadowmask_vp;
 extern const char *fallbackShader_shadowmask_fp;
 extern const char *fallbackShader_ssao_vp;
 extern const char *fallbackShader_ssao_fp;
+
+/*
+ * Gort: Fallback shader for CCTV postprocessing.
+ */
+extern const char *fallbackShader_cctv_vp;
+extern const char *fallbackShader_cctv_fp;
+
 extern const char *fallbackShader_texturecolor_vp;
 extern const char *fallbackShader_texturecolor_fp;
 extern const char *fallbackShader_normalcolor_vp;
@@ -1396,7 +1403,6 @@ void GLSL_InitGPUShaders(void)
 
 	numEtcShaders++;
 
-
 	attribs = ATTR_POSITION | ATTR_TEXCOORD;
 	extradefines[0] = '\0';
 
@@ -1410,6 +1416,25 @@ void GLSL_InitGPUShaders(void)
 	GLSL_SetUniformInt(&tr.ssaoShader, UNIFORM_SCREENDEPTHMAP, TB_COLORMAP);
 
 	GLSL_FinishGPUShader(&tr.ssaoShader);
+
+	numEtcShaders++;
+
+    /*
+     * Gort: Initialize shader for CCTV postprocessing effect
+     */
+	attribs = ATTR_POSITION | ATTR_TEXCOORD;
+	extradefines[0] = '\0';
+
+	if (!GLSL_InitGPUShader(&tr.cctvShader, "cctv", attribs, qtrue, extradefines, qtrue, fallbackShader_cctv_vp, fallbackShader_cctv_fp))
+	{
+		ri.Error(ERR_FATAL, "Could not load cctv shader!");
+	}
+
+	GLSL_InitUniforms(&tr.cctvShader);
+
+	GLSL_SetUniformInt(&tr.cctvShader, UNIFORM_SCREENDEPTHMAP, TB_COLORMAP);
+
+	GLSL_FinishGPUShader(&tr.cctvShader);
 
 	numEtcShaders++;
 
@@ -1507,6 +1532,11 @@ void GLSL_ShutdownGPUShaders(void)
 
 	GLSL_DeleteGPUShader(&tr.shadowmaskShader);
 	GLSL_DeleteGPUShader(&tr.ssaoShader);
+
+    /*
+     * Gort: Cleanup CCTV postprocessing shader
+     */
+	GLSL_DeleteGPUShader(&tr.cctvShader);
 
 	for ( i = 0; i < 4; i++)
 		GLSL_DeleteGPUShader(&tr.depthBlurShader[i]);

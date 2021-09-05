@@ -144,8 +144,6 @@ static void DrawNormals (shaderCommands_t *input) {
 		qglEnable( GL_POLYGON_OFFSET_FILL );
 	}
 
-
-
 	shaderProgram_t *sp = &tr.normalColorShader;
 
 	GLSL_BindProgram(sp);

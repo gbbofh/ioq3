@@ -1536,6 +1536,12 @@ const void *RB_PostProcess(const void *data)
 
     RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
 
+    /*
+     * Gort: Run CCTV postprocessing effect
+     */
+    if(r_cctv->integer) {
+    }
+
 	if (0 && r_sunlightMode->integer)
 	{
 		ivec4_t dstBox;
