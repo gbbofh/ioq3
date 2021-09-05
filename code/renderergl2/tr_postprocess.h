@@ -33,6 +33,6 @@ void RB_GaussianBlur(float blur);
 /*
  * Gort: Custom Postprocessing function for CCTV camera effect
  */
-void RB_CCTV(FBO_t *src, ivec4_t srcBox, FBO_t *dt, ivec4_t dstBox);
+void RB_CCTV();
 
 #endif

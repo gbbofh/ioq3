@@ -1584,7 +1584,8 @@ const void *RB_PostProcess(const void *data)
 	if(r_cctv->integer) {
 
 	    // RB_CCTV(srcFbo, srcBox, NULL, dstBox);
-	    RB_CCTV(NULL, srcBox, NULL, dstBox);
+	    // RB_CCTV(NULL, srcBox, NULL, dstBox);
+        RB_CCTV();
 	}
 
 	backEnd.framePostProcessed = qtrue;

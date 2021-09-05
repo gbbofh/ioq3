@@ -485,37 +485,36 @@ void RB_GaussianBlur(float blur)
 /*
  * Gort: Generate a CCTV footage-like effect.
  */
-void RB_CCTV(FBO_t *src, ivec4_t srcBox, FBO_t *dst, ivec4_t dstBox)
+void RB_CCTV()
 {
     vec4_t color;
+    ivec4_t srcBox;
+    ivec4_t destBox;
 
     VectorSet4(color, 1, 1, 1, 1);
 
     /*
      * Downsample from the source FBO to 1/4 resolution
-     * Copy the downsampled image to scratch FBO 1
+     * Copy the downsampled image to scratch FBO0
      */
-    FBO_FastBlit(src, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-    // FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    FBO_FastBlit(NULL, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
     /*
-     * Run the shader and store the results in scratch FBO 2
+     * Run the shader and store the results in scratch FBO1
      */
-    // FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, tr.textureScratchFbo[1], dstBox, &tr.cctvShader, NULL, 0);
+    FBO_Blit(tr.textureScratchFbo[0], NULL, NULL, tr.textureScratchFbo[1], NULL, &tr.cctvShader, color, 0);
 
     /*
      * Set up the source and dest boxes to copy back to screen buffer
      */
-    VectorSet4(srcBox, 0, 0, tr.quarterFbo[1]->width, tr.quarterFbo[1]->height);
-    // VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[1]->width, tr.textureScratchFbo[1]->height);
-    VectorSet4(dstBox, 0, 0, glConfig.vidWidth,              glConfig.vidHeight);
+    VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[1]->width, tr.textureScratchFbo[1]->height);
+    VectorSet4(destBox, 0, 0, glConfig.vidWidth,              glConfig.vidHeight);
 
     /*
      * Overwrite the contents of the screen buffer with the
      * postprocessed image
      */
-    // FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, NULL, dstBox, NULL, NULL, 0);
-    // FBO_Blit(tr.textureScratchFbo[1], srcBox, NULL, NULL, dstBox, NULL, color, 0);
-    FBO_Blit(tr.quarterFbo[0], srcBox, NULL, NULL, dstBox, &tr.cctvShader, color, 0);
+    FBO_FastBlit(tr.textureScratchFbo[1], srcBox, NULL, destBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 }
 
