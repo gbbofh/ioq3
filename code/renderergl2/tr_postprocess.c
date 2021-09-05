@@ -485,7 +485,7 @@ void RB_GaussianBlur(float blur)
 /*
  * Gort: Generate a CCTV footage-like effect.
  */
-void RB_CCTV()
+void RB_CCTV(void)
 {
     vec4_t color;
     ivec4_t srcBox;
