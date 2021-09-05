@@ -57,6 +57,10 @@ extern const char *fallbackShader_cctv_fp;
 
 extern const char *fallbackShader_texturecolor_vp;
 extern const char *fallbackShader_texturecolor_fp;
+
+/*
+ * Gort: Fallback shader for debugging vertex normals.
+ */
 extern const char *fallbackShader_normalcolor_vp;
 extern const char *fallbackShader_normalcolor_fp;
 extern const char *fallbackShader_tonemap_vp;
@@ -1006,7 +1010,7 @@ void GLSL_InitGPUShaders(void)
 
 
     /*
-     * Normal shader
+     * Gort: Initialize vertex normal shader for debugging
      */
 	attribs = ATTR_POSITION | ATTR_NORMAL | ATTR_TEXCOORD;
 
@@ -1537,6 +1541,11 @@ void GLSL_ShutdownGPUShaders(void)
      * Gort: Cleanup CCTV postprocessing shader
      */
 	GLSL_DeleteGPUShader(&tr.cctvShader);
+
+    /*
+     * Gort: Cleanup debugging shader for vertex normals
+     */
+	GLSL_DeleteGPUShader(&tr.normalColorShader);
 
 	for ( i = 0; i < 4; i++)
 		GLSL_DeleteGPUShader(&tr.depthBlurShader[i]);
