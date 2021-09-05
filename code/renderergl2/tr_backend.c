@@ -1536,14 +1536,6 @@ const void *RB_PostProcess(const void *data)
 
     RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
 
-    /*
-     * Gort: Run CCTV postprocessing effect
-     */
-    if(r_cctv->integer) {
-
-        RB_CCTV(NULL, srcBox, NULL, dstBox);
-    }
-
 	if (0 && r_sunlightMode->integer)
 	{
 		ivec4_t dstBox;
@@ -1585,6 +1577,14 @@ const void *RB_PostProcess(const void *data)
 		VectorSet4(dstBox, 256, glConfig.vidHeight - 256, 256, 256);
 		FBO_BlitFromTexture(tr.sunRaysImage, NULL, NULL, NULL, dstBox, NULL, NULL, 0);
 	}*/
+
+    /*
+     * Gort: Run CCTV postprocessing effect
+     */
+    if(r_cctv->integer) {
+
+        RB_CCTV(NULL, srcBox, NULL, dstBox);
+    }
 
 	backEnd.framePostProcessed = qtrue;
 
