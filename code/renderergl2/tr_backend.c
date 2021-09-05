@@ -1540,6 +1540,8 @@ const void *RB_PostProcess(const void *data)
      * Gort: Run CCTV postprocessing effect
      */
     if(r_cctv->integer) {
+
+        RB_CCTV(NULL, srcBox, NULL, dstBox);
     }
 
 	if (0 && r_sunlightMode->integer)
