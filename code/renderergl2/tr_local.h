@@ -1535,6 +1535,11 @@ typedef struct {
 	
 	image_t					*textureDepthImage;
 
+    /*
+     * Gort: Image for rendering CCTV post processing effect
+     */
+    image_t                 *screenCctvImage;
+
 	FBO_t					*renderFbo;
 	FBO_t					*msaaResolveFbo;
 	FBO_t					*sunRaysFbo;
@@ -1550,6 +1555,11 @@ typedef struct {
 	FBO_t					*screenSsaoFbo;
 	FBO_t					*hdrDepthFbo;
 	FBO_t                   *renderCubeFbo;
+
+    /*
+     * Gort: FBO for rendering CCTV post processing effect
+     */
+    FBO_t                   *screenCctvFbo;
 
 	shader_t				*defaultShader;
 	shader_t				*shadowShader;

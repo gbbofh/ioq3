@@ -1586,6 +1586,7 @@ const void *RB_PostProcess(const void *data)
 	    // RB_CCTV(srcFbo, srcBox, NULL, dstBox);
 	    // RB_CCTV(NULL, srcBox, NULL, dstBox);
         RB_CCTV();
+        FBO_FastBlit(tr.screenCctvFbo, NULL, NULL, NULL, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 	}
 
 	backEnd.framePostProcessed = qtrue;

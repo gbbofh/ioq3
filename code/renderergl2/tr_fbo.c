@@ -402,6 +402,17 @@ void FBO_Init(void)
 		R_CheckFBO(tr.screenSsaoFbo);
 	}
 
+    /*
+     * Gort: Create FBO for CCTV effect
+     */
+
+    if(tr.screenCctvImage) {
+
+		tr.screenCctvFbo = FBO_Create("_screencctv", tr.screenCctvImage->width, tr.screenCctvImage->height);
+		FBO_AttachImage(tr.screenCctvFbo, tr.screenCctvImage, GL_COLOR_ATTACHMENT0, 0);
+		R_CheckFBO(tr.screenCctvFbo);
+    }
+
 	if (tr.renderCubeImage)
 	{
 		tr.renderCubeFbo = FBO_Create("_renderCubeFbo", tr.renderCubeImage->width, tr.renderCubeImage->height);
