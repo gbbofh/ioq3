@@ -503,7 +503,8 @@ void RB_CCTV(void)
     /*
      * Run the shader and store the results in scratch FBO1
      */
-    FBO_Blit(tr.textureScratchFbo[0], NULL, NULL, tr.textureScratchFbo[1], NULL, &tr.cctvShader, color, 0);
+    // FBO_Blit(tr.textureScratchFbo[0], NULL, NULL, tr.textureScratchFbo[1], NULL, &tr.cctvShader, color, 0);
+    FBO_Blit(tr.textureScratchFbo[0], NULL, NULL, tr.textureScratchFbo[1], NULL, NULL, color, 0);
 
     /*
      * Set up the source and dest boxes to copy back to screen buffer
@@ -515,6 +516,7 @@ void RB_CCTV(void)
      * Overwrite the contents of the screen buffer with the
      * postprocessed image
      */
-    FBO_FastBlit(tr.textureScratchFbo[1], srcBox, NULL, destBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    // FBO_FastBlit(tr.textureScratchFbo[1], srcBox, NULL, destBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    FBO_FastBlit(tr.textureScratchFbo[1], NULL, NULL, NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 }
 
