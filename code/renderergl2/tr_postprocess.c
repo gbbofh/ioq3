@@ -498,18 +498,19 @@ void RB_CCTV(void)
      * Copy the downsampled image to scratch FBO0
      */
     FBO_FastBlit(NULL, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-    FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    // FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
     /*
      * Run the shader and store the results in scratch FBO1
      */
     // FBO_Blit(tr.textureScratchFbo[0], NULL, NULL, tr.textureScratchFbo[1], NULL, &tr.cctvShader, color, 0);
-    FBO_Blit(tr.textureScratchFbo[0], NULL, NULL, tr.textureScratchFbo[1], NULL, NULL, color, 0);
+    FBO_Blit(tr.quarterFbo[0], NULL, NULL, tr.quarterFbo[1], NULL, &tr.cctvShader, color, 0);
 
     /*
      * Set up the source and dest boxes to copy back to screen buffer
      */
-    VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[1]->width, tr.textureScratchFbo[1]->height);
+    // VectorSet4(srcBox, 0, 0, tr.textureScratchFbo[1]->width, tr.textureScratchFbo[1]->height);
+    VectorSet4(srcBox, 0, 0, tr.quarterFbo[1]->width, tr.quarterFbo[1]->height);
     VectorSet4(destBox, 0, 0, glConfig.vidWidth,              glConfig.vidHeight);
 
     /*
@@ -517,6 +518,7 @@ void RB_CCTV(void)
      * postprocessed image
      */
     // FBO_FastBlit(tr.textureScratchFbo[1], srcBox, NULL, destBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-    FBO_FastBlit(tr.textureScratchFbo[1], NULL, NULL, NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    // FBO_FastBlit(tr.textureScratchFbo[1], NULL, NULL, NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    FBO_FastBlit(tr.quarterFbo[1], NULL, NULL, NULL, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 }
 
