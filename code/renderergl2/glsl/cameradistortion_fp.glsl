@@ -4,16 +4,16 @@ varying vec2   var_ScreenTex;
 
 void main()
 {
-    const int PIXEL_SIZE = 2;
+    const int PIXEL_SIZE = 8;
 
-    vec2 texSize = textureSize(u_ScreenImageMap).xy;
+    vec2 texSize = textureSize(u_ScreenImageMap, 0).xy;
 
     float x = int(gl_FragCoord.x) % PIXEL_SIZE;
     float y = int(gl_FragCoord.y) % PIXEL_SIZE;
 
     vec4 sample = texture(u_ScreenImageMap, gl_FragCoord.xy / texSize);
 
-    if(!sample.a) return;
+    if(sample.a <= 0) return;
 
     x = floor(PIXEL_SIZE / 2.0) - x;
     y = floor(PIXEL_SIZE / 2.0) - y;
