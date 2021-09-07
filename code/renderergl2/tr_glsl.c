@@ -249,7 +249,10 @@ static void GLSL_GetShaderHeader( GLenum shaderType, const GLchar *extra, char *
 	// HACK: abuse the GLSL preprocessor to turn GLSL 1.20 shaders into 1.30 ones
 	if(glRefConfig.glslMajorVersion > 1 || (glRefConfig.glslMajorVersion == 1 && glRefConfig.glslMinorVersion >= 30))
 	{
-		if (glRefConfig.glslMajorVersion > 1 || (glRefConfig.glslMajorVersion == 1 && glRefConfig.glslMinorVersion >= 50))
+        // Gort - Testing GLSL 330 compatibility
+		if (glRefConfig.glslMajorVersion > 3 || (glRefConfig.glslMajorVersion == 3 && glRefConfig.glslMinorVersion >= 30))
+			Q_strcat(dest, size, "#version 330\n");
+		else if (glRefConfig.glslMajorVersion > 1 || (glRefConfig.glslMajorVersion == 1 && glRefConfig.glslMinorVersion >= 50))
 			Q_strcat(dest, size, "#version 150\n");
 		else
 			Q_strcat(dest, size, "#version 130\n");
