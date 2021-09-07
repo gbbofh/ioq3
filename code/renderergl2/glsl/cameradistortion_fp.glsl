@@ -1,27 +1,38 @@
 uniform sampler2D u_ScreenImageMap;
+uniform sampler2D u_ScreenDepthMap;
 uniform int u_PixelSize;
 
 varying vec2   var_ScreenTex;
 
-void main()
+vec4 pixelate(sampler2D color, vec2 coord)
 {
-    vec2 texSize = textureSize(u_ScreenImageMap, 0).xy;
+    vec2 texSize = textureSize(color, 0).xy;
 
-    float x = int(gl_FragCoord.x) % u_PixelSize;
-    float y = int(gl_FragCoord.y) % u_PixelSize;
-
-    vec4 sample = texture(u_ScreenImageMap, gl_FragCoord.xy / texSize);
-
-    if(sample.a <= 0) return;
+    float x = int(coord.x) % u_PixelSize;
+    float y = int(coord.y) % u_PixelSize;
 
     x = floor(u_PixelSize / 2.0) - x;
     y = floor(u_PixelSize / 2.0) - y;
 
-    x = x + gl_FragCoord.x;
-    y = y + gl_FragCoord.y;
+    x = x + coord.x;
+    y = y + coord.y;
 
-    sample = texture(u_ScreenImageMap, vec2(x, y) / texSize);
-    gl_FragColor = sample;
+    return texture(color, vec2(x, y) / texSize);
+}
 
-	// gl_FragColor = texture(u_ScreenImageMap, var_ScreenTex);
+vec4 distort(sampler2D color, vec2 coord)
+{
+    vec4 sample = pixelate(color, coord);
+
+    return sample;
+}
+
+void main()
+{
+    vec2 texSize = textureSize(u_ScreenDepthMap, 0).xy;
+    vec4 depth = texture(u_ScreenDepthMap, gl_FragCoord.xy / texSize);
+
+    if(depth.a <= 0) return;
+
+    gl_FragColor = distort(u_ScreenImageMap, gl_FragCoord);
 }
