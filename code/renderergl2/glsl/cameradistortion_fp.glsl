@@ -15,8 +15,8 @@ void main()
 
     if(!sample.a) return;
 
-    x = floor(x / 2) - x;
-    y = floor(y / 2) - y;
+    x = floor(PIXEL_SIZE / 2.0) - x;
+    y = floor(PIXEL_SIZE / 2.0) - y;
 
     x = x + gl_FragCoord.x;
     y = y + gl_FragCoord.y;
