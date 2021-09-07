@@ -1570,7 +1570,7 @@ const void *RB_PostProcess(const void *data)
 		srcBox[3] = backEnd.viewParms.viewportHeight * tr.screenCameraDistortionImage->height / (float)glConfig.vidHeight;
 
 		// FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, NULL);
-        FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, color, 0);
+        FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, NULL, 0);
 	}
 
 	backEnd.framePostProcessed = qtrue;
