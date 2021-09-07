@@ -689,6 +689,9 @@ typedef enum
 	UNIFORM_AUTOEXPOSUREMINMAX,
 	UNIFORM_TONEMINAVGMAXLINEAR,
 
+    // Gort - Uniform for camera distortion effect
+    UNIFORM_PIXELSIZE,
+
 	UNIFORM_PRIMARYLIGHTORIGIN,
 	UNIFORM_PRIMARYLIGHTCOLOR,
 	UNIFORM_PRIMARYLIGHTAMBIENT,
@@ -1781,6 +1784,7 @@ extern  cvar_t  *r_depthPrepass;
 extern  cvar_t  *r_ssao;
 
 extern cvar_t   *r_cameraDistortion; // Gort - Camera distortion PP effect.
+extern cvar_t   *r_camPixelization;  // Gort - Pixelization for distortion fx.
 
 extern  cvar_t  *r_normalMapping;
 extern  cvar_t  *r_specularMapping;

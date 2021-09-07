@@ -1116,6 +1116,8 @@ const void	*RB_DrawSurfs( const void *data ) {
             // Gort - Perform camera distortion post processing effect
 			if (r_cameraDistortion->integer)
 			{
+                int pixSize = r_camPixelization->integer;
+
 				vec4_t quadVerts[4];
 				vec2_t texCoords[4];
 
@@ -1139,6 +1141,7 @@ const void	*RB_DrawSurfs( const void *data ) {
 				GLSL_BindProgram(&tr.cameraDistortionShader);
 
                 GL_BindToTMU(tr.renderImage, TB_COLORMAP);
+				GLSL_SetUniformInt(&tr.cameraDistortionShader, UNIFORM_PIXELSIZE, pixSize);
 
 				RB_InstantQuad2(quadVerts, texCoords); //, color, shaderProgram, invTexRes);
 			}

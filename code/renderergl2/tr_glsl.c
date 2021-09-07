@@ -143,6 +143,9 @@ static uniformInfo_t uniformsInfo[] =
 	{ "u_AutoExposureMinMax",  GLSL_VEC2 },
 	{ "u_ToneMinAvgMaxLinear", GLSL_VEC3 },
 
+    // Gort - Uniform for camera distortion shader
+	{ "u_PixelSize", GLSL_INT },
+
 	{ "u_PrimaryLightOrigin",  GLSL_VEC4  },
 	{ "u_PrimaryLightColor",   GLSL_VEC3  },
 	{ "u_PrimaryLightAmbient", GLSL_VEC3  },
