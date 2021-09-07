@@ -48,6 +48,9 @@ extern const char *fallbackShader_shadowmask_vp;
 extern const char *fallbackShader_shadowmask_fp;
 extern const char *fallbackShader_ssao_vp;
 extern const char *fallbackShader_ssao_fp;
+// Gort - extern declarations for fallback shader strings for camera distortion
+extern const char *fallbackShader_cameradistortion_vp;
+extern const char *fallbackShader_cameradistortion_fp;
 extern const char *fallbackShader_texturecolor_vp;
 extern const char *fallbackShader_texturecolor_fp;
 extern const char *fallbackShader_tonemap_vp;
