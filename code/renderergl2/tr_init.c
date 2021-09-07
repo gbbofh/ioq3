@@ -128,6 +128,8 @@ cvar_t  *r_forceAutoExposureMax;
 cvar_t  *r_depthPrepass;
 cvar_t  *r_ssao;
 
+cvar_t  *r_cameraDistortion; // Gort - Camera distortion PP effect.
+
 cvar_t  *r_normalMapping;
 cvar_t  *r_specularMapping;
 cvar_t  *r_deluxeMapping;
@@ -1239,6 +1241,8 @@ void R_Register( void )
 
 	r_depthPrepass = ri.Cvar_Get( "r_depthPrepass", "1", CVAR_ARCHIVE );
 	r_ssao = ri.Cvar_Get( "r_ssao", "1", CVAR_LATCH | CVAR_ARCHIVE );
+
+	r_cameraDistortion = ri.Cvar_Get( "r_cameraDistortion", "1", CVAR_LATCH | CVAR_ARCHIVE );
 
 	r_normalMapping = ri.Cvar_Get( "r_normalMapping", "1", CVAR_ARCHIVE | CVAR_LATCH );
 	r_specularMapping = ri.Cvar_Get( "r_specularMapping", "1", CVAR_ARCHIVE | CVAR_LATCH );

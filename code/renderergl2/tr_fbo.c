@@ -402,6 +402,14 @@ void FBO_Init(void)
 		R_CheckFBO(tr.screenSsaoFbo);
 	}
 
+    // Gort - Set up FBO for camera distortion effect
+    if(tr.screenCameraDistortionImage)
+    {
+        tr.cameraDistortionFbo = FBO_Create("_cameraDistortion", tr.screenCameraDistortionImage->width, tr->screenCameraDistortionImage->height);
+        FBO_AttachImage(tr.cameraDistortionFbo, tr.screenCameraDistortionImage, GL_COLOR_ATTACHMENT0, 0);
+        R_CheckFBO(tr.cameraDistortionFbo);
+    }
+
 	if (tr.renderCubeImage)
 	{
 		tr.renderCubeFbo = FBO_Create("_renderCubeFbo", tr.renderCubeImage->width, tr.renderCubeImage->height);

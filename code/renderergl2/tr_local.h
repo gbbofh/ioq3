@@ -1532,6 +1532,8 @@ typedef struct {
 	image_t                 *screenSsaoImage;
 	image_t					*hdrDepthImage;
 	image_t                 *renderCubeImage;
+
+    image_t                 *screenCameraDistortionImage; // Gort - image for camera distortion PP effect
 	
 	image_t					*textureDepthImage;
 
@@ -1550,6 +1552,8 @@ typedef struct {
 	FBO_t					*screenSsaoFbo;
 	FBO_t					*hdrDepthFbo;
 	FBO_t                   *renderCubeFbo;
+
+    FBO_t                   *cameraDistortionFbo; // Gort - FBO for distortion PP effect
 
 	shader_t				*defaultShader;
 	shader_t				*shadowShader;
@@ -1594,6 +1598,8 @@ typedef struct {
 	shaderProgram_t ssaoShader;
 	shaderProgram_t depthBlurShader[4];
 	shaderProgram_t testcubeShader;
+
+    shaderProgram_t cameraDistortionShader; // Gort - shader for camera distortion PP effect
 
 
 	// -----------------------------------------
@@ -1773,6 +1779,8 @@ extern  cvar_t  *r_cameraExposure;
 
 extern  cvar_t  *r_depthPrepass;
 extern  cvar_t  *r_ssao;
+
+extern cvar_t   *r_cameraDistortion; // Gort - Camera distortion PP effect.
 
 extern  cvar_t  *r_normalMapping;
 extern  cvar_t  *r_specularMapping;
