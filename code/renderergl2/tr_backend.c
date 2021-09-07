@@ -1519,7 +1519,6 @@ const void *RB_PostProcess(const void *data)
 			color[0] =
 			color[1] =
 			color[2] = r_cameraExposure->value * r_cameraExposure->value;
-			/*color[2] = pow(2, r_cameraExposure->value);*/
 			color[3] = 1.0f;
 
 			FBO_Blit(srcFbo, srcBox, NULL, NULL, dstBox, NULL, color, 0);
@@ -1529,54 +1528,7 @@ const void *RB_PostProcess(const void *data)
 	if (r_drawSunRays->integer)
 		RB_SunRays(NULL, srcBox, NULL, dstBox);
 
-	/*if (1)
-		RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
-	else
-		RB_GaussianBlur(backEnd.refdef.blurFactor);*/
-
     RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
-
-	if (0 && r_sunlightMode->integer)
-	{
-		ivec4_t dstBox;
-		VectorSet4(dstBox, 0, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.sunShadowDepthImage[0], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-		VectorSet4(dstBox, 128, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.sunShadowDepthImage[1], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-		VectorSet4(dstBox, 256, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.sunShadowDepthImage[2], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-		VectorSet4(dstBox, 384, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.sunShadowDepthImage[3], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-	}
-
-	if (0 && r_shadows->integer == 4)
-	{
-		ivec4_t dstBox;
-		VectorSet4(dstBox, 512 + 0, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.pshadowMaps[0], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-		VectorSet4(dstBox, 512 + 128, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.pshadowMaps[1], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-		VectorSet4(dstBox, 512 + 256, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.pshadowMaps[2], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-		VectorSet4(dstBox, 512 + 384, glConfig.vidHeight - 128, 128, 128);
-		FBO_BlitFromTexture(tr.pshadowMaps[3], NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-	}
-
-	/*if (0)
-	{
-		ivec4_t dstBox;
-		VectorSet4(dstBox, 256, glConfig.vidHeight - 256, 256, 256);
-		FBO_BlitFromTexture(tr.renderDepthImage, NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-		VectorSet4(dstBox, 512, glConfig.vidHeight - 256, 256, 256);
-		FBO_BlitFromTexture(tr.screenShadowImage, NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-	}
-
-	if (0)
-	{
-		ivec4_t dstBox;
-		VectorSet4(dstBox, 256, glConfig.vidHeight - 256, 256, 256);
-		FBO_BlitFromTexture(tr.sunRaysImage, NULL, NULL, NULL, dstBox, NULL, NULL, 0);
-	}*/
 
 	backEnd.framePostProcessed = qtrue;
 
