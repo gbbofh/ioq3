@@ -20,17 +20,19 @@ vec4 pixelate(sampler2D color, vec2 coord)
     return texture(color, vec2(x, y) / texSize);
 }
 
-vec4 decompose_max(vec4 sample)
+vec4 grayscale(vec4 sample)
 {
     float maxColor = max(sample.r, max(sample.g, sample.b));
 
     return vec4(maxColor, maxColor, maxColor, 1);
 }
 
+#if 0
 vec4 tint_sample(vec4 sample, vec4 color, float amount)
 {
     return mix(sample, color, amount);
 }
+#endif
 
 vec4 distort(sampler2D color, vec2 coord)
 {
@@ -38,10 +40,34 @@ vec4 distort(sampler2D color, vec2 coord)
     const float tintAmount = 0.25;
 
     vec4 sample = pixelate(color, coord);
-    sample = decompose_max(sample);
-    sample = tint_sample(sample, tintColor, tintAmount);
+    vec4 lum = grayscale(sample);
 
-    return sample;
+#if 0
+    sample = tint_sample(sample, tintColor, tintAmount);
+#endif
+
+    // Randomize luminance of the pixel
+    // https://stackoverflow.com/questions/4200224/random-noise-functions-for-glsl
+    vec3 noise_in = vec3(coord, time);
+    uint bitPattern = floatBitsToUint(lum.r);
+    uint hash = bitPattern;
+
+    hash += (hash << 10u);
+    hash ^= (hash >> 6u);
+    hash += (hash << 3u);
+    hash ^= (hash >> 11u);
+    hash += (hash << 15u);
+
+    bitPattern = hash & 0x007FFFFFu;
+    bitPattern |= 0x3F800000u;
+
+    // float fNoise = uintBitsToFloat(bitPattern) - 1.0;
+
+    // vec4 noise = vec4(fNoise, fNoise, fNoise, 1.0);
+
+    float noise = uintBitsToFloat(bitPattern) - 1.0;
+
+    return mix(sample, vec4(1, 1, 1, 1), noise);
 }
 
 void main()

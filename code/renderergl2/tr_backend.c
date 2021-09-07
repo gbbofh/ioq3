@@ -1112,40 +1112,6 @@ const void	*RB_DrawSurfs( const void *data ) {
 
 				RB_InstantQuad2(quadVerts, texCoords); //, color, shaderProgram, invTexRes);
 			}
-
-            // Gort - Perform camera distortion post processing effect
-			// if (r_cameraDistortion->integer && r_camPixelization->integer > 1)
-			// {
-            //     int pixSize = r_camPixelization->integer;
-
-			// 	vec4_t quadVerts[4];
-			// 	vec2_t texCoords[4];
-
-			// 	FBO_Bind(tr.cameraDistortionFbo);
-
-			// 	qglViewport(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
-			// 	qglScissor(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
-
-			// 	VectorSet4(quadVerts[0], -1,  1, 0, 1);
-			// 	VectorSet4(quadVerts[1],  1,  1, 0, 1);
-			// 	VectorSet4(quadVerts[2],  1, -1, 0, 1);
-			// 	VectorSet4(quadVerts[3], -1, -1, 0, 1);
-
-			// 	texCoords[0][0] = 0; texCoords[0][1] = 1;
-			// 	texCoords[1][0] = 1; texCoords[1][1] = 1;
-			// 	texCoords[2][0] = 1; texCoords[2][1] = 0;
-			// 	texCoords[3][0] = 0; texCoords[3][1] = 0;
-
-			// 	// GL_State( GLS_DEPTHTEST_DISABLE );
-
-			// 	GLSL_BindProgram(&tr.cameraDistortionShader);
-
-            //     GL_BindToTMU(tr.renderImage, TB_COLORMAP);
-            //     GL_BindToTMU(tr.renderImage, TB_LIGHTMAP);
-			// 	GLSL_SetUniformInt(&tr.cameraDistortionShader, UNIFORM_PIXELSIZE, pixSize);
-
-			// 	RB_InstantQuad2(quadVerts, texCoords); //, color, shaderProgram, invTexRes);
-			// }
 		}
 
 		// reset viewport and scissor
@@ -1507,6 +1473,7 @@ const void *RB_PostProcess(const void *data)
 	}
 
     // Gort - Perform camera distortion post processing effect
+    // using the fresh contents of renderFbo
     if (r_cameraDistortion->integer && r_camPixelization->integer > 1)
     {
         int pixSize = r_camPixelization->integer;

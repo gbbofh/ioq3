@@ -1785,6 +1785,7 @@ extern  cvar_t  *r_ssao;
 
 extern cvar_t   *r_cameraDistortion; // Gort - Camera distortion PP effect.
 extern cvar_t   *r_camPixelization;  // Gort - Pixelization for distortion fx.
+extern cvar_t   *r_cameraTint;       // Gort - Tint for camera rendering
 
 extern  cvar_t  *r_normalMapping;
 extern  cvar_t  *r_specularMapping;

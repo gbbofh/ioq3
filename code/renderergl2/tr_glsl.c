@@ -1401,6 +1401,7 @@ void GLSL_InitGPUShaders(void)
 	numEtcShaders++;
 
 
+    // Gort - Initialize the camera distortion post processing shader
 	attribs = ATTR_POSITION | ATTR_TEXCOORD;
 	extradefines[0] = '\0';
 

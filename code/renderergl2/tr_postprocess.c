@@ -481,3 +481,20 @@ void RB_GaussianBlur(float blur)
 		FBO_Blit(tr.textureScratchFbo[0], srcBox, NULL, NULL, dstBox, NULL, color, GLS_SRCBLEND_SRC_ALPHA | GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA);
 	}
 }
+
+// Gort - Blend a framebuffer with a colour
+void RB_ColorTint(vec4_t color, float factor)
+{
+    factor = Com_Clamp(0.0f, 1.0f, factor);
+
+    if(factor <= 0.0f) return;
+
+    // Downsample
+    FBO_FastBlit(NULL, NULL, tr.quarterFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    FBO_FastBlit(tr.quarterFbo[0], NULL, tr.textureScratchFbo[0], NULL, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+    // Mask off alpha channel
+    qglColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_FALSE);
+    FBO_BlitFromTexture(tr.whiteImage, NULL, NULL, tr.textureScratchFbo[0], NULL, NULL, color, GLS_DEPTHTEST_DISABLE);
+    qglColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+}
