@@ -34,5 +34,5 @@ void main()
 
     if(depth.a <= 0) return;
 
-    gl_FragColor = distort(u_ScreenImageMap, gl_FragCoord);
+    gl_FragColor = distort(u_ScreenImageMap, gl_FragCoord.xy);
 }
