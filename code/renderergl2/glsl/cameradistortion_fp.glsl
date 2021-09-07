@@ -20,9 +20,26 @@ vec4 pixelate(sampler2D color, vec2 coord)
     return texture(color, vec2(x, y) / texSize);
 }
 
+vec4 decompose_max(vec4 sample)
+{
+    float maxColor = max(sample.r, max(sample.g, sample.b));
+
+    return vec4(maxColor, maxColor, maxColor, 1);
+}
+
+vec4 tint_sample(vec4 sample, vec4 color, float amount)
+{
+    return mix(sample, color, amount);
+}
+
 vec4 distort(sampler2D color, vec2 coord)
 {
+    const vec4 tintColor = vec4(0, 1, 0, 1);
+    const float tintAmount = 0.25;
+
     vec4 sample = pixelate(color, coord);
+    sample = decompose_max(sample);
+    sample = tint_sample(sample, tintColor, tintAmount);
 
     return sample;
 }
