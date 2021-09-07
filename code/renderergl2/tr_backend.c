@@ -1125,6 +1125,8 @@ const void	*RB_DrawSurfs( const void *data ) {
 
 				FBO_Bind(tr.cameraDistortionFbo);
 
+                GL_BindToTMU(tr.renderImage, TB_COLORMAP);
+
 				qglViewport(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
 				qglScissor(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
 
