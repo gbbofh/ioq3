@@ -1395,6 +1395,23 @@ void GLSL_InitGPUShaders(void)
 	numEtcShaders++;
 
 
+	attribs = ATTR_POSITION | ATTR_TEXCOORD;
+	extradefines[0] = '\0';
+
+	if (!GLSL_InitGPUShader(&tr.cameraDistortionShader, "cameradistortion", attribs, qtrue, extradefines, qtrue, fallbackShader_cameradistortion_vp, fallbackShader_cameradistortion_fp))
+	{
+		ri.Error(ERR_FATAL, "Could not load cameradistortion shader!");
+	}
+
+	GLSL_InitUniforms(&tr.cameraDistortionShader);
+
+	GLSL_SetUniformInt(&tr.cameraDistortionShader, UNIFORM_SCREENIMAGEMAP, TB_COLORMAP);
+
+	GLSL_FinishGPUShader(&tr.cameraDistortionShader);
+
+	numEtcShaders++;
+
+
 	for (i = 0; i < 4; i++)
 	{
 		attribs = ATTR_POSITION | ATTR_TEXCOORD;

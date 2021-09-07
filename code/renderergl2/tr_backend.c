@@ -1119,10 +1119,6 @@ const void	*RB_DrawSurfs( const void *data ) {
 				vec4_t quadVerts[4];
 				vec2_t texCoords[4];
 
-				viewInfo[2] = 1.0f / ((float)(tr.screenCameraDistortionImage->width)  * tan(backEnd.viewParms.fovX * M_PI / 360.0f) * 2.0f);
-				viewInfo[3] = 1.0f / ((float)(tr.screenCameraDistortionImage->height) * tan(backEnd.viewParms.fovY * M_PI / 360.0f) * 2.0f);
-				viewInfo[3] *= (float)backEnd.viewParms.viewportHeight / (float)backEnd.viewParms.viewportWidth;
-
 				FBO_Bind(tr.cameraDistortionFbo);
 
 				qglViewport(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
