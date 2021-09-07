@@ -1119,14 +1119,14 @@ const void	*RB_DrawSurfs( const void *data ) {
 				vec4_t quadVerts[4];
 				vec2_t texCoords[4];
 
-				viewInfo[2] = 1.0f / ((float)(tr.screenCameraDistortionImage[0]->width)  * tan(backEnd.viewParms.fovX * M_PI / 360.0f) * 2.0f);
-				viewInfo[3] = 1.0f / ((float)(tr.screenCameraDistortionImage[0]->height) * tan(backEnd.viewParms.fovY * M_PI / 360.0f) * 2.0f);
+				viewInfo[2] = 1.0f / ((float)(tr.screenCameraDistortionImage->width)  * tan(backEnd.viewParms.fovX * M_PI / 360.0f) * 2.0f);
+				viewInfo[3] = 1.0f / ((float)(tr.screenCameraDistortionImage->height) * tan(backEnd.viewParms.fovY * M_PI / 360.0f) * 2.0f);
 				viewInfo[3] *= (float)backEnd.viewParms.viewportHeight / (float)backEnd.viewParms.viewportWidth;
 
-				FBO_Bind(tr.cameraDistortionFbo[0]);
+				FBO_Bind(tr.cameraDistortionFbo);
 
-				qglViewport(0, 0, tr.cameraDistortionFbo[0]->width, tr.cameraDistortionFbo[0]->height);
-				qglScissor(0, 0, tr.cameraDistortionFbo[0]->width, tr.cameraDistortionFbo[0]->height);
+				qglViewport(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
+				qglScissor(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
 
 				VectorSet4(quadVerts[0], -1,  1, 0, 1);
 				VectorSet4(quadVerts[1],  1,  1, 0, 1);
@@ -1569,7 +1569,8 @@ const void *RB_PostProcess(const void *data)
 		srcBox[2] = backEnd.viewParms.viewportWidth  * tr.screenCameraDistortionImage->width  / (float)glConfig.vidWidth;
 		srcBox[3] = backEnd.viewParms.viewportHeight * tr.screenCameraDistortionImage->height / (float)glConfig.vidHeight;
 
-		FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, NULL);
+		// FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, NULL);
+        FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, color, 0);
 	}
 
 	backEnd.framePostProcessed = qtrue;
