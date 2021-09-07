@@ -1141,6 +1141,7 @@ const void	*RB_DrawSurfs( const void *data ) {
 				GLSL_BindProgram(&tr.cameraDistortionShader);
 
                 GL_BindToTMU(tr.renderImage, TB_COLORMAP);
+                GL_BindToTMU(tr.renderImage, TB_LIGHTMAP);
 				GLSL_SetUniformInt(&tr.cameraDistortionShader, UNIFORM_PIXELSIZE, pixSize);
 
 				RB_InstantQuad2(quadVerts, texCoords); //, color, shaderProgram, invTexRes);
