@@ -1114,7 +1114,7 @@ const void	*RB_DrawSurfs( const void *data ) {
 			}
 
             // Gort - Perform camera distortion post processing effect
-			if (r_cameraDistortion->integer && r_camPixelization->integer > 0)
+			if (r_cameraDistortion->integer && r_camPixelization->integer > 1)
 			{
                 int pixSize = r_camPixelization->integer;
 
@@ -1563,16 +1563,20 @@ const void *RB_PostProcess(const void *data)
 
     RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
 
-	if (r_cameraDistortion->integer && r_camPixelization > 0)
+	if (r_cameraDistortion->integer && r_camPixelization > 1)
 	{
 		srcBox[0] = backEnd.viewParms.viewportX      * tr.screenCameraDistortionImage->width  / (float)glConfig.vidWidth;
 		srcBox[1] = backEnd.viewParms.viewportY      * tr.screenCameraDistortionImage->height / (float)glConfig.vidHeight;
 		srcBox[2] = backEnd.viewParms.viewportWidth  * tr.screenCameraDistortionImage->width  / (float)glConfig.vidWidth;
 		srcBox[3] = backEnd.viewParms.viewportHeight * tr.screenCameraDistortionImage->height / (float)glConfig.vidHeight;
 
-		// FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, NULL);
-        FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, NULL, 0);
-	}
+        // FBO_Blit(tr.cameraDistortionFbo, srcBox, NULL, NULL, dstBox, NULL, NULL, 0);
+        FBO_FastBlit(tr.cameraDistortionFbo, NULL, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+	} else {
+
+        FBO_FastBlit(srcFbo, srcBox, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    }
 
 	backEnd.framePostProcessed = qtrue;
 
