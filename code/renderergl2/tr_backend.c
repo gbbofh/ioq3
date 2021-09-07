@@ -1563,7 +1563,7 @@ const void *RB_PostProcess(const void *data)
 
     RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
 
-	if (r_cameraDistortion->integer)
+	if (r_cameraDistortion->integer && r_camPixelization > 0)
 	{
 		srcBox[0] = backEnd.viewParms.viewportX      * tr.screenCameraDistortionImage->width  / (float)glConfig.vidWidth;
 		srcBox[1] = backEnd.viewParms.viewportY      * tr.screenCameraDistortionImage->height / (float)glConfig.vidHeight;
