@@ -1114,7 +1114,7 @@ const void	*RB_DrawSurfs( const void *data ) {
 			}
 
             // Gort - Perform camera distortion post processing effect
-			if (r_cameraDistortion->integer)
+			if (r_cameraDistortion->integer && r_camPixelization->integer > 0)
 			{
                 int pixSize = r_camPixelization->integer;
 
@@ -1136,7 +1136,7 @@ const void	*RB_DrawSurfs( const void *data ) {
 				texCoords[2][0] = 1; texCoords[2][1] = 0;
 				texCoords[3][0] = 0; texCoords[3][1] = 0;
 
-				GL_State( GLS_DEPTHTEST_DISABLE );
+				// GL_State( GLS_DEPTHTEST_DISABLE );
 
 				GLSL_BindProgram(&tr.cameraDistortionShader);
 

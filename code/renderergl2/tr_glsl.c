@@ -1412,6 +1412,7 @@ void GLSL_InitGPUShaders(void)
 	GLSL_InitUniforms(&tr.cameraDistortionShader);
 
 	GLSL_SetUniformInt(&tr.cameraDistortionShader, UNIFORM_SCREENIMAGEMAP, TB_COLORMAP);
+	GLSL_SetUniformInt(&tr.cameraDistortionShader, UNIFORM_PIXELSIZE, r_camPixelization->integer);
 
 	GLSL_FinishGPUShader(&tr.cameraDistortionShader);
 
