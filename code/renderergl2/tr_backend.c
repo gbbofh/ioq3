@@ -1125,8 +1125,6 @@ const void	*RB_DrawSurfs( const void *data ) {
 
 				FBO_Bind(tr.cameraDistortionFbo);
 
-                GL_BindToTMU(tr.renderImage, TB_COLORMAP);
-
 				qglViewport(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
 				qglScissor(0, 0, tr.cameraDistortionFbo->width, tr.cameraDistortionFbo->height);
 
@@ -1143,6 +1141,8 @@ const void	*RB_DrawSurfs( const void *data ) {
 				GL_State( GLS_DEPTHTEST_DISABLE );
 
 				GLSL_BindProgram(&tr.cameraDistortionShader);
+
+                GL_BindToTMU(tr.renderImage, TB_COLORMAP);
 
 				RB_InstantQuad2(quadVerts, texCoords); //, color, shaderProgram, invTexRes);
 			}
