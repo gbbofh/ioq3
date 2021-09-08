@@ -6,6 +6,7 @@ uniform sampler2D u_ScreenImageMap;
 uniform sampler2D u_ScreenDepthMap;
 
 uniform vec4 u_ViewInfo;	// paramBitmask, pixelSize, width, height
+uniform vec4 u_Color;       // Color tint
 uniform float u_Time;
 
 varying vec2   var_ScreenTex;

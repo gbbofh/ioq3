@@ -27,18 +27,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // A user mod should never modify this file
 
 #ifdef STANDALONE
-  #define PRODUCT_NAME				"iofoo3"
+  #define PRODUCT_NAME				"idotam"
   #define BASEGAME					"foobar"
-  #define CLIENT_WINDOW_TITLE		"changeme"
-  #define CLIENT_WINDOW_MIN_TITLE	"changeme2"
-  #define HOMEPATH_NAME_UNIX		".foo"
-  #define HOMEPATH_NAME_WIN			"FooBar"
+  #define CLIENT_WINDOW_TITLE		"i.am"
+  #define CLIENT_WINDOW_MIN_TITLE	"i.am"
+  #define HOMEPATH_NAME_UNIX		".idotam"
+  #define HOMEPATH_NAME_WIN			"IAm"
   #define HOMEPATH_NAME_MACOSX		HOMEPATH_NAME_WIN
 //  #define STEAMPATH_NAME			"Foo Bar"
 //  #define STEAMPATH_APPID         ""
-  #define GAMENAME_FOR_MASTER		"foobar"	// must NOT contain whitespace
-  #define CINEMATICS_LOGO		"foologo.roq"
-  #define CINEMATICS_INTRO		"intro.roq"
+  #define GAMENAME_FOR_MASTER		"IAm"	// must NOT contain whitespace
+  #define CINEMATICS_LOGO		"iam.roq"
+  #define CINEMATICS_INTRO		"iam.roq"
 //  #define LEGACY_PROTOCOL	// You probably don't need this for your standalone game
 #else
   #define PRODUCT_NAME				"ioq3"
