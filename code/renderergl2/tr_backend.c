@@ -1539,6 +1539,11 @@ const void *RB_PostProcess(const void *data)
 	// using the fresh contents of renderFbo
 	if (r_cameraDistortion->integer && r_pixelSize->integer > 1)
 	{
+		const int PARAMBIT_GRAYSCALE = 0x00000001;
+		const int PARAMBIT_COLORTINT = 0x00000002;
+		const int PARAMBIT_NOISE = 0x00000004;
+
+		int paramBits = 0;
 		int pixSize = r_pixelSize->integer;
 
 		vec4_t viewInfo;
@@ -1547,7 +1552,7 @@ const void *RB_PostProcess(const void *data)
 		vec2_t texCoords[4];
 
 		// copy view parameters from backend
-		VectorSet4(viewInfo, 0, pixSize, 0.0, 0.0);
+		VectorSet4(viewInfo, paramBits, pixSize, 0.0, 0.0);
 		viewInfo[2] = tr.cameraDistortionFbo->width;
 		viewInfo[3] = tr.cameraDistortionFbo->height;
 

@@ -1,7 +1,11 @@
+#define GRAYSCALE_MASK	(0x00000001)
+#define TINTCOLOR_MASK	(0x00000002)
+#define NOISE_MASK	(0x00000004)
+
 uniform sampler2D u_ScreenImageMap;
 uniform sampler2D u_ScreenDepthMap;
 
-uniform vec4 u_ViewInfo;	// 0, pixelSize, width, height
+uniform vec4 u_ViewInfo;	// paramBitmask, pixelSize, width, height
 uniform float u_Time;
 
 varying vec2   var_ScreenTex;
@@ -42,7 +46,12 @@ vec4 grayscale(vec4 sample)
 
 void main()
 {
+    int paramBits = int(u_ViewInfo.x);
     int pixelSize = int(u_ViewInfo.y);
+
+    bool grayscaleEnabled = bool(paramBits & GRAYSCALE_MASK);
+    bool tintColorEnabled = bool(paramBits & TINTCOLOR_MASK);
+    bool noiseEnabled = bool(paramBits & NOISE_MASK);
 
     const float NOISE_RADIUS = 0.75;
     const float NOISE_SOFT = 0.5;
@@ -72,16 +81,21 @@ void main()
 
     // Calculate the distance from the coordinate
     // to the center of the window
+    // Multiply by the aspect ratio to account for rectangular windows
     float dist = length((coord / resolution - vec2(0.5)) * aspect);
+
+    // Calculate a gradient value from the center of the screen
+    // This, when multiplied by the other noise parameters will
+    // produce a noiseless circle in the middle of the viewport.
     float noiseGradient = 1.0 - smoothstep(NOISE_RADIUS, NOISE_RADIUS - NOISE_SOFT, dist);
 
     vec4 sample = texture(u_ScreenImageMap, coord / texSize);
 
-    float noise = n8rand(coord + 0.07 * u_Time);
+    float noise = noiseEnabled ? n8rand(coord + 0.07 * u_Time) : 0.0;
 
-    vec4 lumSample = grayscale(sample);
+    vec4 lumSample = grayscaleEnabled ? grayscale(sample) : sample;
 
-    vec4 tinted = lumSample * TINT_COLOR;
+    vec4 tinted = lumSample * (tintColorEnabled ? TINT_COLOR : vec4(1.0));
 
     vec4 outSample = mix(tinted, vec4(1.0), noise * NOISE_FREQUENCY * noiseGradient);
 
