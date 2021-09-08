@@ -1506,11 +1506,13 @@ const void *RB_PostProcess(const void *data)
 		if (r_hdr->integer && (r_toneMap->integer || r_forceToneMap->integer))
 		{
 			autoExposure = r_autoExposure->integer || r_forceAutoExposure->integer;
-			RB_ToneMap(srcFbo, srcBox, NULL, dstBox, autoExposure);
+			// RB_ToneMap(srcFbo, srcBox, NULL, dstBox, autoExposure);
+			RB_ToneMap(srcFbo, srcBox, tr.renderFbo, dstBox, autoExposure);
 		}
 		else if (r_cameraExposure->value == 0.0f)
 		{
-			FBO_FastBlit(srcFbo, srcBox, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+			// FBO_FastBlit(srcFbo, srcBox, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+			FBO_FastBlit(srcFbo, srcBox, tr.renderFbo, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 		}
 		else
 		{
@@ -1521,24 +1523,33 @@ const void *RB_PostProcess(const void *data)
 			color[2] = r_cameraExposure->value * r_cameraExposure->value;
 			color[3] = 1.0f;
 
-			FBO_Blit(srcFbo, srcBox, NULL, NULL, dstBox, NULL, color, 0);
+			// FBO_Blit(srcFbo, srcBox, NULL, NULL, dstBox, NULL, color, 0);
+			FBO_Blit(srcFbo, srcBox, NULL, tr.renderFbo, dstBox, NULL, color, 0);
 		}
 	}
 
 	if (r_drawSunRays->integer)
-		RB_SunRays(NULL, srcBox, NULL, dstBox);
+		RB_SunRays(NULL, srcBox, tr.renderFbo, dstBox);
 
-	RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
+	// RB_BokehBlur(NULL, srcBox, NULL, dstBox, backEnd.refdef.blurFactor);
+	RB_BokehBlur(NULL, srcBox, tr.renderFbo, dstBox, backEnd.refdef.blurFactor);
 
 
 	// Gort - Perform camera distortion post processing effect
 	// using the fresh contents of renderFbo
-	if (r_cameraDistortion->integer && r_camPixelization->integer > 1)
+	if (r_cameraDistortion->integer && r_pixelSize->integer > 1)
 	{
-		int pixSize = r_camPixelization->integer;
+		int pixSize = r_pixelSize->integer;
+
+		vec4_t viewInfo;
 
 		vec4_t quadVerts[4];
 		vec2_t texCoords[4];
+
+		// copy view parameters from backend
+		VectorSet4(viewInfo, 0, pixSize, 0.0, 0.0);
+		viewInfo[2] = tr.cameraDistortionFbo->width;
+		viewInfo[3] = tr.cameraDistortionFbo->height;
 
 		// Bind the FBO for writing
 		// And set up the viewport and scissor rects.
@@ -1566,16 +1577,18 @@ const void *RB_PostProcess(const void *data)
 		GL_BindToTMU(tr.renderDepthImage, TB_LIGHTMAP);
 
 		// Set up uniforms for the post processing effect
-		GLSL_SetUniformInt(&tr.cameraDistortionShader, UNIFORM_PIXELSIZE, pixSize);
 		GLSL_SetUniformFloat(&tr.cameraDistortionShader, UNIFORM_TIME, tess.shaderTime);
+		GLSL_SetUniformVec4(&tr.cameraDistortionShader, UNIFORM_VIEWINFO, viewInfo);
 
 		// Draw the quad infront of the view
 		RB_InstantQuad2(quadVerts, texCoords); //, color, shaderProgram, invTexRes);
 
 		// Blit the result from our FBO over to renderFbo so that it can be displayed
-		FBO_FastBlit(tr.cameraDistortionFbo, NULL, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+		FBO_FastBlit(tr.cameraDistortionFbo, NULL, tr.renderFbo, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 	}
+
+	FBO_FastBlit(tr.renderFbo, NULL, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 	backEnd.framePostProcessed = qtrue;
 

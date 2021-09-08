@@ -1,7 +1,7 @@
 uniform sampler2D u_ScreenImageMap;
 uniform sampler2D u_ScreenDepthMap;
 
-uniform int u_PixelSize;
+uniform vec4 u_ViewInfo;	// 0, pixelSize, width, height
 uniform float u_Time;
 
 varying vec2   var_ScreenTex;
@@ -42,7 +42,11 @@ vec4 grayscale(vec4 sample)
 
 void main()
 {
-    const float NOISE_FREQUENCY = 0.6;
+    int pixelSize = int(u_ViewInfo.y);
+
+    const float NOISE_RADIUS = 0.75;
+    const float NOISE_SOFT = 0.5;
+    const float NOISE_FREQUENCY = 0.4;
     const vec4 TINT_COLOR = vec4(0.89, 1, 1, 1);
 
     vec2 texSize = textureSize(u_ScreenImageMap, 0).xy;
@@ -53,16 +57,23 @@ void main()
 
     if(depth.a <= 0) return;
 
-    float x = int(texCoords.x) % u_PixelSize;
-    float y = int(texCoords.y) % u_PixelSize;
+    float x = int(texCoords.x) % pixelSize;
+    float y = int(texCoords.y) % pixelSize;
 
-    x = floor(u_PixelSize / 2.0) - x;
-    y = floor(u_PixelSize / 2.0) - y;
+    x = floor(pixelSize / 2.0) - x;
+    y = floor(pixelSize / 2.0) - y;
 
     x = x + texCoords.x;
     y = y + texCoords.y;
 
     vec2 coord = vec2(x, y);
+    vec2 resolution = u_ViewInfo.zw;
+    vec2 aspect = vec2(resolution.x / resolution.y, 1.0);
+
+    // Calculate the distance from the coordinate
+    // to the center of the window
+    float dist = length((coord / resolution - vec2(0.5)) * aspect);
+    float noiseGradient = 1.0 - smoothstep(NOISE_RADIUS, NOISE_RADIUS - NOISE_SOFT, dist);
 
     vec4 sample = texture(u_ScreenImageMap, coord / texSize);
 
@@ -72,7 +83,7 @@ void main()
 
     vec4 tinted = lumSample * TINT_COLOR;
 
-    vec4 outSample = mix(tinted, vec4(1.0), noise * NOISE_FREQUENCY);
+    vec4 outSample = mix(tinted, vec4(1.0), noise * NOISE_FREQUENCY * noiseGradient);
 
     gl_FragColor = outSample;
 }
