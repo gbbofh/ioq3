@@ -1539,12 +1539,20 @@ const void *RB_PostProcess(const void *data)
 	// using the fresh contents of renderFbo
 	if (r_cameraDistortion->integer && r_pixelSize->integer > 1)
 	{
-		const int PARAMBIT_GRAYSCALE = 0x00000001;
-		const int PARAMBIT_COLORTINT = 0x00000002;
-		const int PARAMBIT_NOISE = 0x00000004;
+		const int PARAMBIT_GRAYSCALE = 0;
+		const int PARAMBIT_COLORTINT = 1;
+		const int PARAMBIT_NOISE = 2;
+
+		int pixSize = r_pixelSize->integer;
 
 		int paramBits = 0;
-		int pixSize = r_pixelSize->integer;
+		int luminance = r_luminance->integer;
+		int colorTint = r_colorTint->integer;
+		int noise = r_noise->integer;
+
+		paramBits |= (luminance << PARAMBIT_GRAYSCALE);
+		paramBits |= (colorTint << PARAMBIT_COLORTINT);
+		paramBits |= (noise << PARAMBIT_NOISE);
 
 		vec4_t viewInfo;
 

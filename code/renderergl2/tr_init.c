@@ -130,6 +130,9 @@ cvar_t  *r_ssao;
 
 cvar_t  *r_cameraDistortion; // Gort - Camera distortion PP effect.
 cvar_t  *r_pixelSize;  // Gort - pixel size for distortion fx.
+cvar_t  *r_luminance;  	// Gort - r_greyscale is already taken. This is used for distortion effect
+cvar_t  *r_colorTint;  	// Gort - enable color tint for camera distortion effect
+cvar_t  *r_noise;  	// Gort - enable noise for camera distortion effect
 
 cvar_t  *r_normalMapping;
 cvar_t  *r_specularMapping;
@@ -1243,8 +1246,12 @@ void R_Register( void )
 	r_depthPrepass = ri.Cvar_Get( "r_depthPrepass", "1", CVAR_ARCHIVE );
 	r_ssao = ri.Cvar_Get( "r_ssao", "1", CVAR_LATCH | CVAR_ARCHIVE );
 
+	// Gort - Configuration options for the camera distortion shader
 	r_cameraDistortion = ri.Cvar_Get( "r_cameraDistortion", "1", CVAR_LATCH | CVAR_ARCHIVE );
-	r_pixelSize = ri.Cvar_Get( "r_pixelSize", "8", CVAR_CHEAT);
+	r_pixelSize = ri.Cvar_Get( "r_pixelSize", "16", CVAR_CHEAT);
+	r_luminance = ri.Cvar_Get( "r_luminance", "1", CVAR_CHEAT);
+	r_colorTint = ri.Cvar_Get( "r_colorTint", "1", CVAR_CHEAT);
+	r_noise = ri.Cvar_Get( "r_noise", "1", CVAR_CHEAT);
 
 	r_normalMapping = ri.Cvar_Get( "r_normalMapping", "1", CVAR_ARCHIVE | CVAR_LATCH );
 	r_specularMapping = ri.Cvar_Get( "r_specularMapping", "1", CVAR_ARCHIVE | CVAR_LATCH );
