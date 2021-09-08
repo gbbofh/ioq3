@@ -1575,10 +1575,6 @@ const void *RB_PostProcess(const void *data)
 		// Blit the result from our FBO over to renderFbo so that it can be displayed
 		FBO_FastBlit(tr.cameraDistortionFbo, NULL, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-	} else {
-
-		// camera distortion is disabled, so just blit to the renderFbo
-		FBO_FastBlit(srcFbo, NULL, NULL, dstBox, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
 
 	backEnd.framePostProcessed = qtrue;
