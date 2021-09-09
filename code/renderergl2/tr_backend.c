@@ -1552,7 +1552,11 @@ const void *RB_PostProcess(const void *data)
 
         vec4_t color;
 
-        VectorSet4(color, r_colorTint_r, r_colorTint_g, r_colorTint_b, r_colorTint_a);
+        VectorSet4(color,
+                    r_colorTint_r->value,
+                    r_colorTint_g->value,
+                    r_colorTint_b->value,
+                    r_colorTint_a->value);
 
 		paramBits |= (luminance << PARAMBIT_GRAYSCALE);
 		paramBits |= (colorTint << PARAMBIT_COLORTINT);
