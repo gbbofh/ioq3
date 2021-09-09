@@ -95,6 +95,7 @@ typedef struct {
 	qboolean	needDlights;	// true for bmodels that touch a dlight
 	qboolean	lightingCalculated;
 	qboolean	mirrored;		// mirrored matrix, needs reversed culling
+	qboolean	playerLegs;		// true for lower halves of player models
 	vec3_t		lightDir;		// normalized direction towards light, in world space
 	vec3_t      modelLightDir;  // normalized direction towards light, in model space
 	vec3_t		ambientLight;	// color normalized to 0-255

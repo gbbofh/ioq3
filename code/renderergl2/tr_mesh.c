@@ -291,9 +291,27 @@ void R_AddMD3Surfaces( trRefEntity_t *ent ) {
 	int             cubemapIndex;
 	qboolean		personalModel;
 
+	// char *model_name;
+
+	// model_name = tr.currentModel->name;
+
+	// while(*model_name && *model_name != '.') model_name++;
+
+	// model_name = model_name - 5;
+
+	// qboolean is_lower = Q_stricmp(model_name, "lower.md3");
+
+	// if(is_lower == 0) {
+
+	// 	ri.Printf(PRINT_ALL, "%s\n", tr.currentModel->name);
+	// }
+
+	qboolean is_lower = ent->e.is_lower;
+
+
 	// don't add third_person objects if not in a portal
 	personalModel = (ent->e.renderfx & RF_THIRD_PERSON) && !(tr.viewParms.isPortal 
-	                 || (tr.viewParms.flags & (VPF_SHADOWMAP | VPF_DEPTHSHADOW)));
+	                 || (tr.viewParms.flags & (VPF_SHADOWMAP | VPF_DEPTHSHADOW))) && (is_lower != qtrue);
 
 	if ( ent->e.renderfx & RF_WRAP_FRAMES ) {
 		ent->e.frame %= tr.currentModel->mdv[0]->numFrames;

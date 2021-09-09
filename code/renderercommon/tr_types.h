@@ -117,6 +117,8 @@ typedef struct {
 	// extra sprite information
 	float		radius;
 	float		rotation;
+
+	qboolean	is_lower;		// Gort - True only for *_lower.md3 meshes
 } refEntity_t;
 
 
