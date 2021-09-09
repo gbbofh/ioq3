@@ -46,6 +46,23 @@ vec4 grayscale(vec4 sample)
 
 void main()
 {
+    // Rather than add two new uniforms,
+    // the parameters to the shader have been embedded into
+    // the ViewInfo vector, since the first two elements
+    // were previously unused. This could probably be
+    // compressed even further, using only 1 of the 2 elements
+    // But it's not worth doing unless I need to add more
+    // configuration options down the line.
+    // The only three things that may need to be
+    // encoded are NOISE_RADIUS, NOISE_SOFT, and NOISE_FREQUENCY,
+    // and they could all be represented in ~4 bits each
+    // if step size is not a concern. If step size is a concern
+    // then a greater number of bits would need to be used
+    // to allow for more detailed control over their exact appearance
+    // If this pattern of needing to allow for control over effect
+    // parameters continues, it may be worthwhile to add an int or
+    // ivec2/3/4 uniform(s) to tr_glsl.c and tr_local.h to facilitate
+    // the passing of configuration options that way.
     int paramBits = int(u_ViewInfo.x);
     int pixelSize = int(u_ViewInfo.y);
 
