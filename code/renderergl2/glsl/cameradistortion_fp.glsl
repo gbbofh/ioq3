@@ -74,7 +74,7 @@ void main()
     const float NOISE_RADIUS = 0.75;
     const float NOISE_SOFT = 0.5;
     const float NOISE_FREQUENCY = 0.4;
-    const vec4 TINT_COLOR = vec4(0.89, 1, 1, 1);
+    // const vec4 TINT_COLOR = vec4(0.89, 1, 1, 1);
 
     vec2 texSize = textureSize(u_ScreenImageMap, 0).xy;
     vec2 depthSize = textureSize(u_ScreenDepthMap, 0).xy;
@@ -113,7 +113,8 @@ void main()
 
     vec4 lumSample = grayscaleEnabled ? grayscale(sample) : sample;
 
-    vec4 tinted = lumSample * (tintColorEnabled ? TINT_COLOR : vec4(1.0));
+    // vec4 tinted = lumSample * (tintColorEnabled ? TINT_COLOR : vec4(1.0));
+    vec4 tinted = lumSample * (tintColorEnabled ? u_Color : vec4(1.0));
 
     vec4 outSample = mix(tinted, vec4(1.0), noise * NOISE_FREQUENCY * noiseGradient);
 

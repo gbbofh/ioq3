@@ -1780,11 +1780,15 @@ extern  cvar_t  *r_cameraExposure;
 extern  cvar_t  *r_depthPrepass;
 extern  cvar_t  *r_ssao;
 
-extern cvar_t   *r_cameraDistortion; // Gort - Camera distortion PP effect.
-extern cvar_t   *r_pixelSize;  	// Gort - pixel size for distortion fx.
-extern cvar_t   *r_luminance;  	// Gort - r_greyscale is already taken. This is used for distortion effect
-extern cvar_t   *r_colorTint;  	// Gort - enable color tint for camera distortion effect
-extern cvar_t   *r_noise;  	// Gort - enable noise for camera distortion effect
+extern  cvar_t  *r_cameraDistortion; // Gort - Camera distortion PP effect.
+extern  cvar_t  *r_pixelSize;  	// Gort - pixel size for distortion fx.
+extern  cvar_t  *r_luminance;  	// Gort - r_greyscale is already taken. This is used for distortion effect
+extern  cvar_t  *r_colorTint;  	// Gort - enable color tint for camera distortion effect
+extern  cvar_t  *r_colorTint_r;	// Gort - tint red channel
+extern  cvar_t  *r_colorTint_g;	// Gort - tint green channel
+extern  cvar_t  *r_colorTint_b;	// Gort - tint blue channel
+extern  cvar_t  *r_colorTint_a;	// Gort - tint alpha channel
+extern  cvar_t  *r_noise;  	// Gort - enable noise for camera distortion effect
 
 extern  cvar_t  *r_normalMapping;
 extern  cvar_t  *r_specularMapping;

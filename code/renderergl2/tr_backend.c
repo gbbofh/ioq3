@@ -1550,6 +1550,10 @@ const void *RB_PostProcess(const void *data)
 		int colorTint = r_colorTint->integer;
 		int noise = r_noise->integer;
 
+        vec4_t color;
+
+        VectorSet4(color, r_colorTint_r, r_colorTint_g, r_colorTint_b, r_colorTint_a);
+
 		paramBits |= (luminance << PARAMBIT_GRAYSCALE);
 		paramBits |= (colorTint << PARAMBIT_COLORTINT);
 		paramBits |= (noise << PARAMBIT_NOISE);
@@ -1592,6 +1596,7 @@ const void *RB_PostProcess(const void *data)
 		// Set up uniforms for the post processing effect
 		GLSL_SetUniformFloat(&tr.cameraDistortionShader, UNIFORM_TIME, tess.shaderTime);
 		GLSL_SetUniformVec4(&tr.cameraDistortionShader, UNIFORM_VIEWINFO, viewInfo);
+		GLSL_SetUniformVec4(&tr.cameraDistortionShader, UNIFORM_COLOR, color);
 
 		// Draw the quad infront of the view
 		RB_InstantQuad2(quadVerts, texCoords); //, color, shaderProgram, invTexRes);

@@ -132,6 +132,10 @@ cvar_t  *r_cameraDistortion; // Gort - Camera distortion PP effect.
 cvar_t  *r_pixelSize;  // Gort - pixel size for distortion fx.
 cvar_t  *r_luminance;  	// Gort - r_greyscale is already taken. This is used for distortion effect
 cvar_t  *r_colorTint;  	// Gort - enable color tint for camera distortion effect
+cvar_t  *r_colorTint_r;  	// Gort - tint red channel
+cvar_t  *r_colorTint_g;  	// Gort - tint green channel
+cvar_t  *r_colorTint_b;  	// Gort - tint blue channel
+cvar_t  *r_colorTint_a;  	// Gort - tint alpha channel
 cvar_t  *r_noise;  	// Gort - enable noise for camera distortion effect
 
 cvar_t  *r_normalMapping;
@@ -1251,6 +1255,10 @@ void R_Register( void )
 	r_pixelSize = ri.Cvar_Get( "r_pixelSize", "16", CVAR_CHEAT);
 	r_luminance = ri.Cvar_Get( "r_luminance", "1", CVAR_CHEAT);
 	r_colorTint = ri.Cvar_Get( "r_colorTint", "1", CVAR_CHEAT);
+	r_colorTint = ri.Cvar_Get( "r_colorTint_r", "0.89", CVAR_CHEAT);
+	r_colorTint = ri.Cvar_Get( "r_colorTint_g", "1", CVAR_CHEAT);
+	r_colorTint = ri.Cvar_Get( "r_colorTint_b", "1", CVAR_CHEAT);
+	r_colorTint = ri.Cvar_Get( "r_colorTint_a", "1", CVAR_CHEAT);
 	r_noise = ri.Cvar_Get( "r_noise", "1", CVAR_CHEAT);
 
 	r_normalMapping = ri.Cvar_Get( "r_normalMapping", "1", CVAR_ARCHIVE | CVAR_LATCH );
