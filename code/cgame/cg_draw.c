@@ -2277,6 +2277,24 @@ static qboolean CG_DrawFollow( void ) {
 }
 
 
+/*
+=================
+CG_DrawAmmoWarning
+=================
+*/
+static void CG_DrawSubtitle( void ) {
+	const char	*s;
+	int			w;
+
+	if ( cg_showSubtitles.integer == 0 ) {
+		return;
+	}
+    s = cg_subtitleText.string;
+	w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
+	CG_DrawBigString(320 - w / 2, 64, s, 1.0F);
+}
+
+
 
 /*
 =================

@@ -1191,6 +1191,10 @@ extern  vmCvar_t		cg_recordSPDemoName;
 extern	vmCvar_t		cg_obeliskRespawnDelay;
 #endif
 
+// Gort - CVAR's for displaying subtitle text
+extern  vmCvar_t        cg_showSubtitles;
+extern  vmCvar_t        cg_subtitleText;
+
 //
 // cg_main.c
 //
