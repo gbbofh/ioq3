@@ -328,8 +328,8 @@ static cvarTable_t cvarTable[] = {
 	{ &cg_trueLightning, "cg_trueLightning", "0.0", CVAR_ARCHIVE},
 //	{ &cg_pmove_fixed, "cg_pmove_fixed", "0", CVAR_USERINFO | CVAR_ARCHIVE }
     { &cg_showSubtitles, "cg_showSubtitles", "0", CVAR_ARCHIVE },
-    { &cg_subtitleText, "cg_subtileText", "", CVAR_TEMP },
-    { &cg_subtitleTime, "cg_subtileTime", "", CVAR_TEMP },
+    { &cg_subtitleText, "cg_subtitleText", "", CVAR_TEMP },
+    { &cg_subtitleTime, "cg_subtitleTime", "0", CVAR_TEMP },
 };
 
 static int  cvarTableSize = ARRAY_LEN( cvarTable );
