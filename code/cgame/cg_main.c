@@ -203,6 +203,7 @@ vmCvar_t	cg_obeliskRespawnDelay;
 // Gort - CVAR's for displaying subtitle text
 vmCvar_t        cg_showSubtitles;
 vmCvar_t        cg_subtitleText;
+vmCvar_t        cg_subtitleTime;
 
 typedef struct {
 	vmCvar_t	*vmCvar;
@@ -328,6 +329,7 @@ static cvarTable_t cvarTable[] = {
 //	{ &cg_pmove_fixed, "cg_pmove_fixed", "0", CVAR_USERINFO | CVAR_ARCHIVE }
     { &cg_showSubtitles, "cg_showSubtitles", "0", CVAR_ARCHIVE },
     { &cg_subtitleText, "cg_subtileText", "", CVAR_TEMP },
+    { &cg_subtitleTime, "cg_subtileTime", "", CVAR_TEMP },
 };
 
 static int  cvarTableSize = ARRAY_LEN( cvarTable );

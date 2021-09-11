@@ -2286,10 +2286,23 @@ static void CG_DrawSubtitle( void ) {
 	// Gort - Draws the currently set subtitle string from the subtitleText cvar
 	const char	*s;
 	int			w;
+    int         subtitleSeconds;
+    static int  subtitleSet;
 
 	if ( cg_showSubtitles.integer == 0 ) {
 		return;
 	}
+
+    subtitleSeconds = (cg.time - subtitleSet) / 1000;
+
+    if(subtitleSeconds >= cg_subtitleTime.integer) {
+
+        subtitleSet = 0;
+        return;
+    }
+
+    if(subtitleSet == 0) subtitleSet = cg.time;
+
     s = cg_subtitleText.string;
 	w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
 	CG_DrawBigString(320 - w / 2, 64, s, 1.0F);
@@ -2559,7 +2572,7 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 		return;
 	}
 
-	// Draw current subtitle string
+	// Gort - Draw current subtitle string
 	CG_DrawSubtitle();
 
 /*
