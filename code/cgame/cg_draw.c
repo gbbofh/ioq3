@@ -2279,10 +2279,11 @@ static qboolean CG_DrawFollow( void ) {
 
 /*
 =================
-CG_DrawAmmoWarning
+CG_DrawSubtitle
 =================
 */
 static void CG_DrawSubtitle( void ) {
+	// Gort - Draws the currently set subtitle string from the subtitleText cvar
 	const char	*s;
 	int			w;
 
@@ -2557,6 +2558,9 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 		CG_DrawIntermission();
 		return;
 	}
+
+	// Draw current subtitle string
+	CG_DrawSubtitle();
 
 /*
 	if (cg.cameraMode) {
