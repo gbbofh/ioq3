@@ -304,6 +304,8 @@ typedef enum {
 typedef enum {
 	WP_NONE,
 
+	WP_HANDS,
+
 	WP_GAUNTLET,
 	WP_MACHINEGUN,
 	WP_SHOTGUN,

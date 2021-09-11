@@ -2288,6 +2288,8 @@ void CG_Player( centity_t *cent ) {
 	memset( &torso, 0, sizeof(torso) );
 	memset( &head, 0, sizeof(head) );
 
+	// Gort - Set is_lower flag for the leg model, so that it can be rendered
+	// in spite of being a "personalModel"
 	legs.is_lower = qtrue;
 
 	// get the rotation information
